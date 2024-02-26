@@ -44,6 +44,30 @@ IDX_SANDWICH_TOFU = 2
 descriptions.append('Tofu')
 prices.append(5.75)
 
+IDX_BEVERAGE_SMALL = 3
+descriptions.append('Small')
+prices.append(1.0)
+
+IDX_BEVERAGE_MEDIUM = 4
+descriptions.append('Medium')
+prices.append(1.5)
+
+IDX_BEVERAGE_LARGE = 5
+descriptions.append('Large')
+prices.append(2.0)
+
+IDX_FRIES_SMALL = 6
+descriptions.append('Small')
+prices.append(1.5)
+
+IDX_FRIES_MEDIUM = 7
+descriptions.append('Medium')
+prices.append(1.5)
+
+IDX_FRIES_LARGE = 8
+descriptions.append('Large')
+prices.append(2.0)
+
 
 def new_order():
     order[IDX_TOTAL_COST] = 0
