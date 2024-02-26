@@ -113,6 +113,22 @@ def get_sandwich():
 
     order[IDX_TOTAL_COST] += prices[idx]
 
+def display_order():
+    output = 'Your order:'
+
+    # add sandwich information
+    output += '\n\tSandwich: '
+    if order[IDX_SANDWICH_TYPE] == 'None':
+        output += 'none'
+    else:
+        output += f'{order[IDX_SANDWICH_TYPE]} ${order[IDX_SANDWICH_COST]}'
+
+
+    # total cost
+    output += f'\nTotal: ${order[IDX_TOTAL_COST]}'
+
+    print(output)
+
 def get_python_version() -> str:
     return f'{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}'
 
@@ -120,7 +136,8 @@ if __name__ == '__main__':
     print(f'Python version {get_python_version()}')
     new_order()
     get_sandwich()
-    print(order)
+    #print(order)
+    display_order()
 
 
 
