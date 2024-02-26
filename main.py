@@ -29,43 +29,43 @@ IDX_DISCOUNT_APPLIED = 7
 order.append(False)
 
 # NOTE: indexes for descriptions and prices must be kept in sync with each other
-descriptions = []
+descrs = []
 prices = []
 
 IDX_SANDWICH_CHICKEN = 0
-descriptions.append('Chicken')
+descrs.append('Chicken')
 prices.append(5.25)
 
 IDX_SANDWICH_BEEF = 1
-descriptions.append('Beef')
+descrs.append('Beef')
 prices.append(6.25)
 
 IDX_SANDWICH_TOFU = 2
-descriptions.append('Tofu')
+descrs.append('Tofu')
 prices.append(5.75)
 
 IDX_BEVERAGE_SMALL = 3
-descriptions.append('Small')
+descrs.append('Small')
 prices.append(1.0)
 
 IDX_BEVERAGE_MEDIUM = 4
-descriptions.append('Medium')
+descrs.append('Medium')
 prices.append(1.5)
 
 IDX_BEVERAGE_LARGE = 5
-descriptions.append('Large')
+descrs.append('Large')
 prices.append(2.0)
 
 IDX_FRIES_SMALL = 6
-descriptions.append('Small')
+descrs.append('Small')
 prices.append(1.5)
 
 IDX_FRIES_MEDIUM = 7
-descriptions.append('Medium')
+descrs.append('Medium')
 prices.append(1.5)
 
 IDX_FRIES_LARGE = 8
-descriptions.append('Large')
+descrs.append('Large')
 prices.append(2.0)
 
 
@@ -88,7 +88,7 @@ def get_sandwich():
     # create prompt
     prompt = "Which sandwich would you like to order: "
     for idx in range(IDX_SANDWICH_CHICKEN, IDX_SANDWICH_TOFU + 1):
-        prompt += f'{descriptions[idx]}: ${prices[idx]}, '
+        prompt += f'{descrs[idx]}: ${prices[idx]}, '
     prompt = prompt.removesuffix(', ')
     prompt += " >"
     choice = input(prompt)
@@ -108,10 +108,11 @@ def get_sandwich():
     if idx == -1:
         print('Invalid sandwich choice. No sandwich will be ordered.')
         return
-    order[IDX_SANDWICH_TYPE] = descriptions[idx]
+    order[IDX_SANDWICH_TYPE] = descrs[idx]
     order[IDX_SANDWICH_COST] = prices[idx]
 
     order[IDX_TOTAL_COST] += prices[idx]
+
 
 def display_order():
     output = 'Your order:'
@@ -136,15 +137,14 @@ def display_order():
 
     print(output)
 
+
 def get_python_version() -> str:
     return f'{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}'
+
 
 if __name__ == '__main__':
     print(f'Python version {get_python_version()}')
     new_order()
     get_sandwich()
-    #print(order)
+    # print(order)
     display_order()
-
-
-
