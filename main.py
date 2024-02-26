@@ -123,6 +123,13 @@ def display_order():
     else:
         output += f'{order[IDX_SANDWICH_TYPE]} ${order[IDX_SANDWICH_COST]}'
 
+    # add beverage information
+
+    # add fries information
+
+    # show discount if applied
+    if order[IDX_DISCOUNT_APPLIED]:
+        output += '\n\t** $1 discount was applied **'
 
     # total cost
     output += f'\nTotal: ${order[IDX_TOTAL_COST]}'
