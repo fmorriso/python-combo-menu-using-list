@@ -173,6 +173,10 @@ def get_fries():
 
         case 's':
             idx = IDX_FRIES_SMALL
+            yesno = input('Do you want to super-size to large size?>').strip().lower()
+            if yesno[:1] == 'y':
+                idx = IDX_FRIES_LARGE
+
         case 'm':
             idx = IDX_FRIES_MEDIUM
         case 'l':
