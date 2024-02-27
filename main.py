@@ -90,7 +90,7 @@ def get_sandwich():
     for idx in range(IDX_SANDWICH_CHICKEN, IDX_SANDWICH_TOFU + 1):
         prompt += f'{descrs[idx]}: ${prices[idx]:.2f}, '
     prompt = prompt.removesuffix(', ')
-    prompt += " >"
+    prompt += " ?>"
     choice = input(prompt)
     if choice is None or len(choice) == 0:
         choice = "unknown"
