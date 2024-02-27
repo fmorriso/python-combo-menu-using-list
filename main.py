@@ -28,6 +28,12 @@ order.append(0)
 IDX_DISCOUNT_APPLIED = 7
 order.append(False)
 
+IDX_NUM_KETCHUP_PACKETS = 8
+order.append(0)
+
+IDX_KETCHUP_PACKETS_COST = 9
+order.append(0)
+
 # NOTE: indexes for descriptions and prices must be kept in sync with each other
 descrs = []
 prices = []
@@ -68,6 +74,10 @@ IDX_FRIES_LARGE = 8
 descrs.append('Large')
 prices.append(2.0)
 
+IDX_KETCHUP_PACKETS = 9
+descrs.append('Ketchup Packets')
+prices.append(0.25)
+
 
 def new_order():
     order[IDX_TOTAL_COST] = 0
@@ -85,6 +95,9 @@ def new_order():
 
 
 def get_sandwich():
+    if not get_yes_no("Would you like a sandwich?>"):
+        return
+
     # create prompt
     prompt = "Which sandwich would you like to order: ("
     for idx in range(IDX_SANDWICH_CHICKEN, IDX_SANDWICH_TOFU + 1):
@@ -226,14 +239,23 @@ def display_order():
     else:
         output += f'{order[IDX_FRIES_SIZE]:10} ${order[IDX_FRIES_COST]:6.2f}'
 
+    # show ketchup packets, if any were requested
+    item_name = 'Ketchup Packets:'
+    if order[IDX_KETCHUP_PACKETS_COST] > 0:
+        output += f'\n\t{item_name:17} {order[IDX_NUM_KETCHUP_PACKETS]:-4} ${order[IDX_KETCHUP_PACKETS_COST]:6.2f}'
+    else:
+        output += f'\n\t{item_name:17} NONE'
+
     # show discount if applied
     if order[IDX_DISCOUNT_APPLIED]:
         item_name = 'Discount:'
         item_value = -1.0
         output += f'\n\t{item_name:22} ${item_value:6.2f}'
 
+
+
     # total cost
-    output += f'\nTotal: ${order[IDX_TOTAL_COST]}'
+    output += f'\n{"Total:":26} ${order[IDX_TOTAL_COST]:6.2f}'
 
     print(output)
 
@@ -255,6 +277,23 @@ def get_yes_no(question):
                 case other:
                     print("please respond with y, n, Yes, yes, No or no")
 
+def get_ketchup_packets():
+    if not get_yes_no("Would you like any ketchup packets?>"):
+        return
+    per_each_cost = prices[IDX_KETCHUP_PACKETS]
+    while True:
+        try:
+            n = int(input(f"How many ketchup packets would you like at ${per_each_cost:.2f} each?>"))
+            if n > 0:
+                order[IDX_NUM_KETCHUP_PACKETS] = n
+                order[IDX_KETCHUP_PACKETS_COST] = n * per_each_cost
+                order[IDX_TOTAL_COST] += order[IDX_KETCHUP_PACKETS_COST]
+                break
+            else:
+                print('Enter only a positive whole number')
+        except ValueError:
+            print('Enter only whole numbers')
+
 
 def get_python_version() -> str:
     return f'{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}'
@@ -266,5 +305,6 @@ if __name__ == '__main__':
     get_sandwich()
     get_beverage()
     get_fries()
+    get_ketchup_packets()
     check_for_discount()
     display_order()
