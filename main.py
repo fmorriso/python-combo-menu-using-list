@@ -158,25 +158,68 @@ def get_fries():
     if yesno[:1].lower() != 'y':
         return
 
+    # create prompt
+    prompt = "Which fries size you like to order: "
+    for idx in range(IDX_FRIES_SMALL, IDX_FRIES_LARGE + 1):
+        prompt += f'{descrs[idx]}: ${prices[idx]:.2f}, '
+    prompt = prompt.removesuffix(', ')
+    prompt += " >"
+    choice = input(prompt)
+    if choice is None or len(choice) == 0:
+        choice = "unknown"
+    choice = choice[:1].lower()
+    idx = -1
+    match choice[:1]:
+
+        case 's':
+            idx = IDX_FRIES_SMALL
+        case 'm':
+            idx = IDX_FRIES_MEDIUM
+        case 'l':
+            idx = IDX_FRIES_LARGE
+
+    if idx == -1:
+        print('Invalid fries size. No fries will be ordered.')
+        return
+
+    order[IDX_FRIES_SIZE] = descrs[idx]
+    order[IDX_FRIES_COST] = prices[idx]
+
+    order[IDX_TOTAL_COST] += prices[idx]
+
+
+def check_for_discount():
+    if order[IDX_SANDWICH_COST] > 0 and order[IDX_BEVERAGE_COST] > 0 and order [IDX_TOTAL_COST] > 0:
+        order[IDX_DISCOUNT_APPLIED] = True
+        order[IDX_TOTAL_COST] -= 1
+
 
 def display_order():
     output = 'Your order:'
 
     # add sandwich information
-    output += '\n\tSandwich: '
+    item_name = 'Sandwich:'
+    output += f'\n\t{item_name:12}'
     if order[IDX_SANDWICH_TYPE] == 'None':
         output += 'none'
     else:
         output += f'{order[IDX_SANDWICH_TYPE]:10} ${order[IDX_SANDWICH_COST]:6.2f}'
 
     # add beverage information
-    output += '\n\tBeverage: '
+    item_name = 'Beverage:'
+    output += f'\n\t{item_name:12}'
     if order[IDX_BEVERAGE_SIZE] == 'None':
         output += 'none'
     else:
         output += f'{order[IDX_BEVERAGE_SIZE]:10} ${order[IDX_BEVERAGE_COST]:6.2f}'
 
     # add fries information
+    item_name = 'Fries:'
+    output += f'\n\t{item_name:12}'
+    if order[IDX_FRIES_SIZE] == 'None':
+        output += 'none'
+    else:
+        output += f'{order[IDX_FRIES_SIZE]:10} ${order[IDX_FRIES_COST]:6.2f}'
 
     # show discount if applied
     if order[IDX_DISCOUNT_APPLIED]:
@@ -198,4 +241,5 @@ if __name__ == '__main__':
     get_sandwich()
     get_beverage()
     get_fries()
+    check_for_discount()
     display_order()
