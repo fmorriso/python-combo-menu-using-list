@@ -164,27 +164,28 @@ def get_fries():
         prompt += f'{descrs[idx]}: ${prices[idx]:.2f}, '
     prompt = prompt.removesuffix(', ')
     prompt += " ?>"
-    choice = input(prompt)
-    if choice is None or len(choice) == 0:
-        choice = "unknown"
-    choice = choice[:1].lower()
-    idx = -1
-    match choice[:1]:
 
-        case 's':
-            idx = IDX_FRIES_SMALL
-            yesno = input('Do you want to super-size to large size?>').strip().lower()
-            if yesno[:1] == 'y':
+    idx = -1
+    while idx == -1:
+        choice = input(prompt)
+        if choice is None or len(choice) == 0:
+            choice = "unknown"
+        choice = choice[:1].lower()
+        match choice[:1]:
+            case 's':
+                idx = IDX_FRIES_SMALL
+                yesno = input('Do you want to super-size to large size?>').strip().lower()
+                if yesno[:1] == 'y':
+                    idx = IDX_FRIES_LARGE
+
+            case 'm':
+                idx = IDX_FRIES_MEDIUM
+
+            case 'l':
                 idx = IDX_FRIES_LARGE
 
-        case 'm':
-            idx = IDX_FRIES_MEDIUM
-        case 'l':
-            idx = IDX_FRIES_LARGE
-
-    if idx == -1:
-        print('Invalid fries size. No fries will be ordered.')
-        return
+            case other:
+                print('Invalid fries size. Try again.')
 
     order[IDX_FRIES_SIZE] = descrs[idx]
     order[IDX_FRIES_COST] = prices[idx]
