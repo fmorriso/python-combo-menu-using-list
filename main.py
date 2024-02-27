@@ -91,23 +91,23 @@ def get_sandwich():
         prompt += f'{descrs[idx]}: ${prices[idx]:.2f}, '
     prompt = prompt.removesuffix(', ')
     prompt += " ?>"
-    choice = input(prompt)
-    if choice is None or len(choice) == 0:
-        choice = "unknown"
-    choice = choice[:1].lower()
+
     idx = -1
-    match choice[:1]:
+    while idx == -1:
+        choice = input(prompt)
+        if choice is None or len(choice) == 0:
+            choice = "unknown"
+        choice = choice[:1].lower()
+        match choice[:1]:
+            case 'c':
+                idx = IDX_SANDWICH_CHICKEN
+            case 'b':
+                idx = IDX_SANDWICH_BEEF
+            case 't':
+                idx = IDX_SANDWICH_TOFU
+            case other:
+                print('Invalid sandwich choice. Try again.')
 
-        case 'c':
-            idx = IDX_SANDWICH_CHICKEN
-        case 'b':
-            idx = IDX_SANDWICH_BEEF
-        case 't':
-            idx = IDX_SANDWICH_TOFU
-
-    if idx == -1:
-        print('Invalid sandwich choice. No sandwich will be ordered.')
-        return
     order[IDX_SANDWICH_TYPE] = descrs[idx]
     order[IDX_SANDWICH_COST] = prices[idx]
 
@@ -163,7 +163,7 @@ def get_fries():
     for idx in range(IDX_FRIES_SMALL, IDX_FRIES_LARGE + 1):
         prompt += f'{descrs[idx]}: ${prices[idx]:.2f}, '
     prompt = prompt.removesuffix(', ')
-    prompt += " >"
+    prompt += " ?>"
     choice = input(prompt)
     if choice is None or len(choice) == 0:
         choice = "unknown"
@@ -227,7 +227,9 @@ def display_order():
 
     # show discount if applied
     if order[IDX_DISCOUNT_APPLIED]:
-        output += '\n\t** $1 discount was applied **'
+        item_name = 'Discount:'
+        item_value = -1.0
+        output += f'\n\t{item_name:22} ${item_value:6.2f}'
 
     # total cost
     output += f'\nTotal: ${order[IDX_TOTAL_COST]}'
