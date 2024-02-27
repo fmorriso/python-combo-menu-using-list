@@ -95,7 +95,7 @@ def new_order():
 
 
 def get_sandwich():
-    if not get_yes_no("Would you like a sandwich?>"):
+    if not get_yes_no_answer("Would you like a sandwich?>"):
         return
 
     # create prompt
@@ -131,7 +131,7 @@ def get_sandwich():
 
 
 def get_beverage():
-    if not get_yes_no("Would you like a beverage?>"):
+    if not get_yes_no_answer("Would you like a beverage?>"):
         return
 
     # create prompt
@@ -168,7 +168,7 @@ def get_beverage():
 
 
 def get_fries():
-    if not get_yes_no("Would you like fries?>"):
+    if not get_yes_no_answer("Would you like fries?>"):
         return
 
     # create prompt
@@ -187,7 +187,7 @@ def get_fries():
         match choice[:1]:
             case 's':
                 idx = IDX_FRIES_SMALL
-                yesno = get_yes_no('Do you want to super-size to large size?>')
+                yesno = get_yes_no_answer('Do you want to super-size to large size?>')
                 if yesno:
                     idx = IDX_FRIES_LARGE
 
@@ -204,6 +204,24 @@ def get_fries():
     order[IDX_FRIES_COST] = prices[idx]
 
     order[IDX_TOTAL_COST] += prices[idx]
+
+
+def get_ketchup_packets():
+    if not get_yes_no_answer("Would you like any ketchup packets?>"):
+        return
+    per_each_cost = prices[IDX_KETCHUP_PACKETS]
+    while True:
+        try:
+            n = int(input(f"How many ketchup packets would you like at ${per_each_cost:.2f} each?>"))
+            if n > 0:
+                order[IDX_NUM_KETCHUP_PACKETS] = n
+                order[IDX_KETCHUP_PACKETS_COST] = n * per_each_cost
+                order[IDX_TOTAL_COST] += order[IDX_KETCHUP_PACKETS_COST]
+                break
+            else:
+                print('Enter only a positive whole number')
+        except ValueError:
+            print('Enter only whole numbers')
 
 
 def check_for_discount():
@@ -252,15 +270,13 @@ def display_order():
         item_value = -1.0
         output += f'\n\t{item_name:22} ${item_value:6.2f}'
 
-
-
     # total cost
     output += f'\n{"Total:":26} ${order[IDX_TOTAL_COST]:6.2f}'
 
     print(output)
 
 
-def get_yes_no(question):
+def get_yes_no_answer(question):
     while True:
         answer = input(question)
         if answer is None or len(answer) == 0:
@@ -276,23 +292,6 @@ def get_yes_no(question):
 
                 case other:
                     print("please respond with y, n, Yes, yes, No or no")
-
-def get_ketchup_packets():
-    if not get_yes_no("Would you like any ketchup packets?>"):
-        return
-    per_each_cost = prices[IDX_KETCHUP_PACKETS]
-    while True:
-        try:
-            n = int(input(f"How many ketchup packets would you like at ${per_each_cost:.2f} each?>"))
-            if n > 0:
-                order[IDX_NUM_KETCHUP_PACKETS] = n
-                order[IDX_KETCHUP_PACKETS_COST] = n * per_each_cost
-                order[IDX_TOTAL_COST] += order[IDX_KETCHUP_PACKETS_COST]
-                break
-            else:
-                print('Enter only a positive whole number')
-        except ValueError:
-            print('Enter only whole numbers')
 
 
 def get_python_version() -> str:
