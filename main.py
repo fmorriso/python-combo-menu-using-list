@@ -262,7 +262,7 @@ def display_order():
     if order[IDX_KETCHUP_PACKETS_COST] > 0:
         output += f'\n\t{item_name:17} {order[IDX_NUM_KETCHUP_PACKETS]:-4} ${order[IDX_KETCHUP_PACKETS_COST]:6.2f}'
     else:
-        output += f'\n\t{item_name:17} NONE'
+        output += f'\n\t{item_name:17} none'
 
     # show discount if applied
     if order[IDX_DISCOUNT_APPLIED]:
