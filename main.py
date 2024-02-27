@@ -276,7 +276,7 @@ def display_order():
     print(output)
 
 
-def get_yes_no_answer(question):
+def get_yes_no_answer(question: str) -> bool:
     while True:
         answer = input(question)
         if answer is None or len(answer) == 0:
