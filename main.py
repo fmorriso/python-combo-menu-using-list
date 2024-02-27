@@ -127,23 +127,23 @@ def get_beverage():
         prompt += f'{descrs[idx]}: ${prices[idx]:.2f}, '
     prompt = prompt.removesuffix(', ')
     prompt += " >"
-    choice = input(prompt)
-    if choice is None or len(choice) == 0:
-        choice = "unknown"
-    choice = choice[:1].lower()
+
     idx = -1
-    match choice[:1]:
+    while idx == -1:
+        choice = input(prompt)
+        if choice is None or len(choice) == 0:
+            choice = "unknown"
+        choice = choice[:1].lower()
 
-        case 's':
-            idx = IDX_BEVERAGE_SMALL
-        case 'm':
-            idx = IDX_BEVERAGE_MEDIUM
-        case 'l':
-            idx = IDX_BEVERAGE_LARGE
-
-    if idx == -1:
-        print('Invalid beverage size. No beverage will be ordered.')
-        return
+        match choice[:1]:
+            case 's':
+                idx = IDX_BEVERAGE_SMALL
+            case 'm':
+                idx = IDX_BEVERAGE_MEDIUM
+            case 'l':
+                idx = IDX_BEVERAGE_LARGE
+            case other:
+                print('Invalid beverage size. Try again.')
 
     order[IDX_BEVERAGE_SIZE] = descrs[idx]
     order[IDX_BEVERAGE_COST] = prices[idx]
@@ -193,7 +193,7 @@ def get_fries():
 
 
 def check_for_discount():
-    if order[IDX_SANDWICH_COST] > 0 and order[IDX_BEVERAGE_COST] > 0 and order [IDX_TOTAL_COST] > 0:
+    if order[IDX_SANDWICH_COST] > 0 and order[IDX_BEVERAGE_COST] > 0 and order [IDX_FRIES_COST] > 0:
         order[IDX_DISCOUNT_APPLIED] = True
         order[IDX_TOTAL_COST] -= 1
 
