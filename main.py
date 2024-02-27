@@ -101,10 +101,13 @@ def get_sandwich():
         match choice[:1]:
             case 'c':
                 idx = IDX_SANDWICH_CHICKEN
+
             case 'b':
                 idx = IDX_SANDWICH_BEEF
+
             case 't':
                 idx = IDX_SANDWICH_TOFU
+
             case other:
                 print('Invalid sandwich choice. Try again.')
 
@@ -138,10 +141,13 @@ def get_beverage():
         match choice[:1]:
             case 's':
                 idx = IDX_BEVERAGE_SMALL
+
             case 'm':
                 idx = IDX_BEVERAGE_MEDIUM
+
             case 'l':
                 idx = IDX_BEVERAGE_LARGE
+
             case other:
                 print('Invalid beverage size. Try again.')
 
