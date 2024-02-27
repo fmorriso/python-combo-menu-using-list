@@ -88,7 +88,7 @@ def get_sandwich():
     # create prompt
     prompt = "Which sandwich would you like to order: "
     for idx in range(IDX_SANDWICH_CHICKEN, IDX_SANDWICH_TOFU + 1):
-        prompt += f'{descrs[idx]}: ${prices[idx]}, '
+        prompt += f'{descrs[idx]}: ${prices[idx]:.2f}, '
     prompt = prompt.removesuffix(', ')
     prompt += " >"
     choice = input(prompt)
@@ -114,6 +114,46 @@ def get_sandwich():
     order[IDX_TOTAL_COST] += prices[idx]
 
 
+def get_beverage():
+    yesno = input("Would you like a beverage?>")
+    if yesno is None or len(yesno) == 0:
+        return
+    if yesno[:1].lower() != 'y':
+        return
+
+    # create prompt
+    prompt = "Which beverage size you like to order: "
+    for idx in range(IDX_BEVERAGE_SMALL, IDX_BEVERAGE_LARGE + 1):
+        prompt += f'{descrs[idx]}: ${prices[idx]:.2f}, '
+    prompt = prompt.removesuffix(', ')
+    prompt += " >"
+    choice = input(prompt)
+    if choice is None or len(choice) == 0:
+        choice = "unknown"
+    choice = choice[:1].lower()
+    idx = -1
+    match choice[:1]:
+
+        case 's':
+            idx = IDX_BEVERAGE_SMALL
+        case 'm':
+            idx = IDX_BEVERAGE_MEDIUM
+        case 'l':
+            idx = IDX_BEVERAGE_LARGE
+
+    if idx == -1:
+        print('Invalid beverage size. No beverage will be ordered.')
+        return
+
+    order[IDX_BEVERAGE_SIZE] = descrs[idx]
+    order[IDX_BEVERAGE_COST] = prices[idx]
+
+    order[IDX_TOTAL_COST] += prices[idx]
+
+def get_fries():
+    pass
+
+
 def display_order():
     output = 'Your order:'
 
@@ -122,9 +162,14 @@ def display_order():
     if order[IDX_SANDWICH_TYPE] == 'None':
         output += 'none'
     else:
-        output += f'{order[IDX_SANDWICH_TYPE]} ${order[IDX_SANDWICH_COST]}'
+        output += f'{order[IDX_SANDWICH_TYPE]:10} ${order[IDX_SANDWICH_COST]:6.2f}'
 
     # add beverage information
+    output += '\n\tBeverage: '
+    if order[IDX_BEVERAGE_SIZE] == 'None':
+        output += 'none'
+    else:
+        output += f'{order[IDX_BEVERAGE_SIZE]:10} ${order[IDX_BEVERAGE_COST]:6.2f}'
 
     # add fries information
 
@@ -143,8 +188,9 @@ def get_python_version() -> str:
 
 
 if __name__ == '__main__':
-    print(f'Python version {get_python_version()}')
+    print(f'Combo Menu using lists and python version {get_python_version()}')
     new_order()
     get_sandwich()
-    # print(order)
+    get_beverage()
+    get_fries()
     display_order()
