@@ -86,11 +86,11 @@ def new_order():
 
 def get_sandwich():
     # create prompt
-    prompt = "Which sandwich would you like to order: "
+    prompt = "Which sandwich would you like to order: ("
     for idx in range(IDX_SANDWICH_CHICKEN, IDX_SANDWICH_TOFU + 1):
         prompt += f'{descrs[idx]}: ${prices[idx]:.2f}, '
     prompt = prompt.removesuffix(', ')
-    prompt += " ?>"
+    prompt += ") ?>"
 
     idx = -1
     while idx == -1:
@@ -118,18 +118,15 @@ def get_sandwich():
 
 
 def get_beverage():
-    yesno = input("Would you like a beverage?>")
-    if yesno is None or len(yesno) == 0:
-        return
-    if yesno[:1].lower() != 'y':
+    if not get_yes_no("Would you like a beverage?>"):
         return
 
     # create prompt
-    prompt = "Which beverage size you like to order: "
+    prompt = "Which beverage size you like to order: ("
     for idx in range(IDX_BEVERAGE_SMALL, IDX_BEVERAGE_LARGE + 1):
         prompt += f'{descrs[idx]}: ${prices[idx]:.2f}, '
     prompt = prompt.removesuffix(', ')
-    prompt += " >"
+    prompt += ") >"
 
     idx = -1
     while idx == -1:
@@ -158,10 +155,7 @@ def get_beverage():
 
 
 def get_fries():
-    yesno = input("Would you like fries?>")
-    if yesno is None or len(yesno) == 0:
-        return
-    if yesno[:1].lower() != 'y':
+    if not get_yes_no("Would you like fries?>"):
         return
 
     # create prompt
@@ -180,8 +174,8 @@ def get_fries():
         match choice[:1]:
             case 's':
                 idx = IDX_FRIES_SMALL
-                yesno = input('Do you want to super-size to large size?>').strip().lower()
-                if yesno[:1] == 'y':
+                yesno = get_yes_no('Do you want to super-size to large size?>')
+                if yesno:
                     idx = IDX_FRIES_LARGE
 
             case 'm':
@@ -200,7 +194,7 @@ def get_fries():
 
 
 def check_for_discount():
-    if order[IDX_SANDWICH_COST] > 0 and order[IDX_BEVERAGE_COST] > 0 and order [IDX_FRIES_COST] > 0:
+    if order[IDX_SANDWICH_COST] > 0 and order[IDX_BEVERAGE_COST] > 0 and order[IDX_FRIES_COST] > 0:
         order[IDX_DISCOUNT_APPLIED] = True
         order[IDX_TOTAL_COST] -= 1
 
@@ -242,6 +236,24 @@ def display_order():
     output += f'\nTotal: ${order[IDX_TOTAL_COST]}'
 
     print(output)
+
+
+def get_yes_no(question):
+    while True:
+        answer = input(question)
+        if answer is None or len(answer) == 0:
+            print("please respond with y, n, Yes, yes, No or no")
+        else:
+            answer = answer.lower()[:1]
+            match answer:
+                case 'y':
+                    return True
+
+                case 'n':
+                    return False
+
+                case other:
+                    print("please respond with y, n, Yes, yes, No or no")
 
 
 def get_python_version() -> str:
