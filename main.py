@@ -150,8 +150,13 @@ def get_beverage():
 
     order[IDX_TOTAL_COST] += prices[idx]
 
+
 def get_fries():
-    pass
+    yesno = input("Would you like fries?>")
+    if yesno is None or len(yesno) == 0:
+        return
+    if yesno[:1].lower() != 'y':
+        return
 
 
 def display_order():
