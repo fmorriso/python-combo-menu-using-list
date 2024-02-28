@@ -5,25 +5,25 @@ order = []
 
 # define and populate portions of the order based on ordinal position
 IDX_TOTAL_COST = 0
-order.append(0)
+order.append(0.0)
 
 IDX_SANDWICH_TYPE = 1
 order.append("None")
 
 IDX_SANDWICH_COST = 2
-order.append(0)
+order.append(0.0)
 
 IDX_BEVERAGE_SIZE = 3
 order.append("None")
 
 IDX_BEVERAGE_COST = 4
-order.append(0)
+order.append(0.0)
 
 IDX_FRIES_SIZE = 5
 order.append("None")
 
 IDX_FRIES_COST = 6
-order.append(0)
+order.append(0.0)
 
 IDX_DISCOUNT_APPLIED = 7
 order.append(False)
