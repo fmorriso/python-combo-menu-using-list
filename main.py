@@ -121,7 +121,7 @@ def get_sandwich():
             case 't':
                 idx = IDX_SANDWICH_TOFU
 
-            case other:
+            case _:
                 print('Invalid sandwich choice. Try again.')
 
     order[IDX_SANDWICH_TYPE] = descrs[idx]
@@ -158,7 +158,7 @@ def get_beverage():
             case 'l':
                 idx = IDX_BEVERAGE_LARGE
 
-            case other:
+            case _:
                 print('Invalid beverage size. Try again.')
 
     order[IDX_BEVERAGE_SIZE] = descrs[idx]
@@ -197,7 +197,7 @@ def get_fries():
             case 'l':
                 idx = IDX_FRIES_LARGE
 
-            case other:
+            case _:
                 print('Invalid fries size. Try again.')
 
     order[IDX_FRIES_SIZE] = descrs[idx]
@@ -209,6 +209,7 @@ def get_fries():
 def get_ketchup_packets():
     if not get_yes_no_answer("Would you like any ketchup packets?>"):
         return
+    
     per_each_cost = prices[IDX_KETCHUP_PACKETS]
     while True:
         try:
@@ -218,8 +219,7 @@ def get_ketchup_packets():
                 order[IDX_KETCHUP_PACKETS_COST] = n * per_each_cost
                 order[IDX_TOTAL_COST] += order[IDX_KETCHUP_PACKETS_COST]
                 break
-            else:
-                print('Enter only a positive whole number')
+            print('Enter only a positive, whole number')
         except ValueError:
             print('Enter only whole numbers')
 
@@ -290,7 +290,7 @@ def get_yes_no_answer(question: str) -> bool:
                 case 'n':
                     return False
 
-                case other:
+                case _:
                     print("please respond with y, n, Yes, yes, No or no")
 
 
