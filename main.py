@@ -32,7 +32,7 @@ IDX_NUM_KETCHUP_PACKETS = 8
 order.append(0)
 
 IDX_KETCHUP_PACKETS_COST = 9
-order.append(0)
+order.append(0.0)
 
 # NOTE: indexes for descriptions and prices must be kept in sync with each other
 descrs = []
@@ -209,7 +209,7 @@ def get_fries():
 def get_ketchup_packets():
     if not get_yes_no_answer("Would you like any ketchup packets?>"):
         return
-    
+
     per_each_cost = prices[IDX_KETCHUP_PACKETS]
     while True:
         try:
